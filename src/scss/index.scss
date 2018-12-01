@@ -1,0 +1,117 @@
+@charset "utf-8";
+html {
+    font-size: 100px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    font-size: .14rem;
+    font-famliy: "微软雅黑";
+    box-sizing: border-box;
+}
+
+body {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+button,
+textarea,
+select,
+input {
+    appearance: none;
+}
+
+a {
+    top-highlight-color: rgba(0, 0, 0, 0)
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+@mixin num($w, $h) {
+    width: $w;
+    height: $h;
+}
+
+$bg:background;
+@font-face {
+    font-family: "iconfont";
+    src: url('../fonts1/iconfont.eot?t=1476059862');
+    /* IE9*/
+    src: url('../fonts1/iconfont.eot?t=1476059862#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    url('../fonts1/iconfont.woff?t=1476059862') format('woff'), /* chrome, firefox */
+    url('../fonts1/iconfont.ttf?t=1476059862') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('../fonts1/iconfont.svg?t=1476059862#iconfont') format('svg');
+    /* iOS 4.1- */
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.wrap {
+    @include num(100%,
+    100%);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+header {
+    @include num(100%,
+    .4rem);
+    display: flex;
+    justify-content: space-between;
+    background: #06C1AE;
+    align-items: center;
+    padding: 0 .1rem;
+    span {
+        color: #fff;
+        input {
+            @include num(2.5rem,
+            .3rem);
+            background: #05A494;
+            border-radius: .03rem;
+            text-indent: .35rem;
+            position: relative;
+            border: none;
+        }
+        &:nth-of-type(2) i.icon {
+            position: absolute;
+            top: .13rem;
+            left: .8rem;
+        }
+        i.icon {
+            margin-left: .03rem;
+        }
+    }
+}
+
+section {
+    flex: 1;
+}
+
+.section-loge {
+    img {
+        @include num(3.75rem,
+        auto);
+    }
+}
+
+footer {
+    @include num(100%,
+    .3rem);
+    background: #06C1AE;
+}
