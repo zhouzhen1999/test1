@@ -2,7 +2,7 @@
  * @Author: Zhen 
  * @Date: 2018-12-01 10:02:42 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-12-01 10:26:39
+ * @Last Modified time: 2018-12-02 11:37:07
  */
 let gulp = require("gulp");
 let sass = require("gulp-sass");
@@ -11,6 +11,9 @@ let server = require("gulp-webserver");
 let url = require("url");
 let path = require("path");
 let fs = require("fs");
+let list = require("./src/mock/swiper.json");
+let data = require("./src/mock/list.json")
+console.log(data)
 
 //编译scss
 gulp.task("devScss", function() {
@@ -32,13 +35,14 @@ gulp.task("devServer", function() {
                 port: 9009,
                 middleware: function(req, res, next) {
                     let pathname = url.parse(req.url).pathname;
-
-                    if (pathname == "/favicon.ico") {
-                        res.end("")
-                        return
+                    if (pathname == "/api/list") {
+                        res.end(JSON.stringify({ "code": 0, data: list }))
+                    } else if (pathname == "/api/data") {
+                        res.end(JSON.stringify({ "code": 0, datas: data }))
+                    } else {
+                        pathname = pathname == "/" ? "index.html" : pathname;
+                        res.end(fs.readFileSync(path.join(__dirname, "src", pathname)))
                     }
-                    pathname = pathname == "/" ? "index.html" : pathname;
-                    res.end(fs.readFileSync(path.join(__dirname, "src", pathname)))
                 }
             }))
     })
