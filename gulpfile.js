@@ -2,7 +2,7 @@
  * @Author: Zhen 
  * @Date: 2018-12-01 10:02:42 
  * @Last Modified by: mikey.zhaopeng
- * @Last Modified time: 2018-12-02 11:37:07
+ * @Last Modified time: 2018-12-02 12:45:34
  */
 let gulp = require("gulp");
 let sass = require("gulp-sass");
@@ -12,8 +12,11 @@ let url = require("url");
 let path = require("path");
 let fs = require("fs");
 let list = require("./src/mock/swiper.json");
-let data = require("./src/mock/list.json")
-console.log(data)
+let data = require("./src/mock/list.json");
+let babel = require("gulp-babel");
+let uglify = require("gulp-uglify");
+let html = require("gulp-htmlmin");
+
 
 //编译scss
 gulp.task("devScss", function() {
@@ -47,4 +50,35 @@ gulp.task("devServer", function() {
             }))
     })
     //开发环境
-gulp.task("dev", gulp.series("devScss", "devServer", "watch"))
+gulp.task("dev", gulp.series("devScss", "devServer", "watch"));
+
+
+//线上环境(css)
+gulp.task("bCss", function() {
+    return gulp.src("./src/css/*.css")
+        .pipe(gulp.dest("./bulid/css"))
+})
+
+//js
+gulp.task("bJs", function() {
+    return gulp.src("./src/js/*.js")
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
+        .pipe(uglify())
+        .pipe(gulp.dest("./bulid/js"))
+})
+
+gulp.task("bCopyJs", function() {
+    return gulp.src("./src/js/lib/*.js")
+        .pipe(gulp.dest("./bulid/libs"))
+})
+
+//html
+gulp.task("bhtml", function() {
+    return gulp.src("./src/*.html")
+        .pipe(gulp.dest("./bulid/html"))
+})
+
+//线上环境
+gulp.task("bulid", gulp.parallel("bCss", "bJs", "bCopyJs", "bhtml"))

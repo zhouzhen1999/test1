@@ -46,6 +46,7 @@ $.ajax({
     }
 })
 
+
 function renderList(data) {
     let str = "";
     data.forEach((i) => {
